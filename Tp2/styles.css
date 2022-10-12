@@ -1,0 +1,45 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.item {
+    background: red;
+    width: 200px;
+    height: 200px;
+    margin: 20px;
+    /*clip-path: circle(50% at center);*/
+    clip-path: circle(50% at top left);
+    transition: background-color, width 2s;
+    /*Transition tiene 4 propiedaes
+    */
+    /*Que propiedades van a sufrir la transiocion
+    por ejemplo: background-color, width, height o all*/
+    transition-property: clip-path;
+    
+    /*Me define el tiempo que va a durar la transicion*/
+    transition-duration: 2s ;
+
+    /*Define la curva de aceleracion de la transicion, por defecto es ease
+     ease | ease-in | ease-in-out | ease-out | linear*/
+    transition-timing-function: linear;
+
+    /*Define tiempo de espera para que una transicion se ejecute*/
+    transition-delay: 2s;
+}
+
+/**pseudo clases, funcionan como disparadores
+:hover, :active, :target, :focus*/
+
+.container .item:hover {
+    /*background: steelblue;*/
+    /**transition: background-color 2s;
+    Se puede agregar aca o directamente en la clase item*/
+    /*width: 400px;*/
+    clip-path: circle(150% at top left);
+}
