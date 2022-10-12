@@ -87,19 +87,26 @@ function iniciarPagina() {
         let canvasHeight = canvas.height;
 
         for (let index = 0; index < 10; index++) {
-            ctx.fillStile = randomRGBA();
+            ctx.fillStyle = randomRGBA();
             ctx.beginPath();
             //posicion ancho, alto, radios, desde 0 hasta 2 * PI circulo total
-            ctx.arc(Math.round(Math.random() * canvasWidth), Math.round(Math.random() * canvasHeight), Math.round(Math.random() * 20), 0, 2 * Math.PI);
+            ctx.arc(Math.round(Math.random() * canvasWidth), 
+                    Math.round(Math.random() * canvasHeight), 
+                    Math.round(Math.random() * 20), 
+                    0, 
+                    2 * Math.PI);
             ctx.fill();
             ctx.closePath();
         }
 
-        for (let index = 0; index < 10; index++) {
-            ctx.fillStile = randomRGBA();
+        for (let index = 0; index < 20; index++) {
+            ctx.fillStyle = randomRGBA();
             ctx.beginPath();
             //posicion ancho, alto, ancho y altura
-            ctx.fillRect(Math.round(Math.random() * canvasWidth), Math.round(Math.random() * canvasHeight),Math.round(Math.random() * canvasWidth) ,Math.round(Math.random() * canvasHeight));            
+            ctx.fillRect(Math.round(Math.random() * canvasWidth), 
+                         Math.round(Math.random() * canvasHeight),
+                         Math.round(Math.random() * canvasWidth/4),
+                         Math.round(Math.random() * canvasHeight/4));            
         }
 
         function randomRGBA() {
