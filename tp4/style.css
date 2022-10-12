@@ -1,0 +1,7 @@
+.div-color1, .div-color2, .div-color3{
+    background-color: aqua;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    margin: 50px; 
+}
