@@ -7,6 +7,8 @@ class circulo {
         this.radio = 15;
         this.img = new Image();
         this.jugador = jugador;
+        this.anguloDesde = 0;
+        this.anguloHasta = 2 * Math.PI;
     }
 
     //Posicion inicial de la ficha
@@ -45,7 +47,11 @@ class circulo {
     getColor(){
         return this.color;
     }
-    
-
+    setRadio(r){
+        this.radio = r;
+    }
+    getRadio(){
+        return this.radio;
+    }
 
 }
