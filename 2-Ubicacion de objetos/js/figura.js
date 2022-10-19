@@ -67,7 +67,7 @@ class figura {
         return this.canvas;
     }
 
-    draw (lugar){
+    draw (lugar, posX, posY){
         console.log("Lugar" + lugar);
     }
 }

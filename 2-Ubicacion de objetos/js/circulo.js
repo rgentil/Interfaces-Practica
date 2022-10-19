@@ -6,12 +6,19 @@ class circulo extends figura {
         this.anguloHasta = 2 * Math.PI;
     }
 
-    draw(lugar) {
+    draw(lugar, posX, posY) {
         this.context.beginPath();
         this.context.fillStyle = this.color;
 
         let x = this.posCanvasX;
         let y = this.posCanvasY;
+
+        if (lugar === 'rectangulo') {
+            x = posX;
+            y = posY;
+            this.posCanvasX = x;
+            this.posCanvasY = y;
+        }
 
         if (lugar === 'inicio') {
             x = this.posInicialX;
@@ -45,5 +52,5 @@ class circulo extends figura {
     getAnguloHasta() {
         return this.anguloHasta;
     }
-    
+
 }

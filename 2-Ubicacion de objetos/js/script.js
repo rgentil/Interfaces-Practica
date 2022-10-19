@@ -1,5 +1,7 @@
 "use strict";
 
+/** @type {CanvasRenderingContext2D} */
+
 document.addEventListener("DOMContentLoaded", iniciarPagina);
 
 function iniciarPagina() {
@@ -11,7 +13,8 @@ function iniciarPagina() {
 
     let rectangulos = [];
 
-    let objetoSeleccionado = null;
+    let circuloSeleccionado = null;
+    let rectanguloSeleccionado = null;
 
     let inicioX = 0;
     let inicioY = 0;
@@ -28,19 +31,44 @@ function iniciarPagina() {
             new Image()
         );
         circulos[index] = c;
+
+        let r = new rectangulo(randomRGBA(),
+            "Jugador" + index,
+            ctx,
+            canvas,
+            500,
+            299,
+            new Image(),
+            100,
+            300
+        )
+        rectangulos[index] = r;
+
         actualizar();
     }
 
     console.table(circulos);
 
     function actualizar() {
+
         //Para dibujar el fondo
         ctx.fillStyle = '#0f0fff';
         ctx.fillRect(0, 0, 800, 600);
 
         for (var i = 0; i < circulos.length; i++) {
-            circulos[i].draw(lugar);
+            rectangulos[i].draw(lugar, 0, 0);
+            if (rectanguloSeleccionado == null) {
+                circulos[i].draw(lugar, 0, 0);
+            } else {
+                let posNueva = { x: rectanguloSeleccionado.getPosCanvasX() + (rectanguloSeleccionado.getLadoX()/2),
+                                 y: rectanguloSeleccionado.getPosCanvasY() + ((rectanguloSeleccionado.getLadoY() - circulos[i].getRadio()))
+                }
+                circulos[i].draw(lugar, posNueva.x, posNueva.y, rectanguloSeleccionado.getPosCanvasY());
+            }
+
         }
+
+        rectanguloSeleccionado = null;
 
         lugar = '';
     }
@@ -55,7 +83,7 @@ function iniciarPagina() {
             let dy = Math.abs(y - circulos[i].getPosCanvasY());
             let distancia = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
             if (distancia <= circulos[i].getRadio()) {
-                objetoSeleccionado = circulos[i];
+                circuloSeleccionado = circulos[i];
                 inicioX = event.clientX - circulos[i].getPosCanvasX();
                 inicioY = event.clientY - circulos[i].getPosCanvasY();
                 break;
@@ -64,8 +92,8 @@ function iniciarPagina() {
     });
 
     canvas.addEventListener('mousemove', function (event) {
-        if (objetoSeleccionado != null) {
-            objetoSeleccionado.setPosicionCanvas(
+        if (circuloSeleccionado != null) {
+            circuloSeleccionado.setPosicionCanvas(
                 event.clientX - inicioX,
                 event.clientY - inicioY,
             )
@@ -76,10 +104,34 @@ function iniciarPagina() {
     //Click del mouse levanta
     canvas.addEventListener('mouseup', function (event) {
         console.log('El raton NO se esta presionando');
-        objetoSeleccionado = null;
+        circuloSeleccionado = null;
         lugar = 'inicio';
-        actualizar()
+
+        let mousePos = getMousePos(event);
+
+        for (var i = 0; i < rectangulos.length; i++) {
+            if (rectangulos[i].getPosCanvasX() < mousePos.x
+                && (rectangulos[i].getLadoX() + rectangulos[i].getPosCanvasX() > mousePos.x)
+                && rectangulos[i].getPosCanvasY() < mousePos.y
+                && (rectangulos[i].getLadoY() + rectangulos[i].getPosCanvasY() > mousePos.y)
+            ) {
+                rectanguloSeleccionado = rectangulos[i];
+                //inicioX = mousePos.x - rectangulos[i].getPosCanvasX();
+                //inicioY = mousePos.y - rectangulos[i].getPosCanvasY();
+                lugar = "rectangulo";
+                break;
+            }
+        }
+
+        actualizar();
     });
+
+    function getMousePos(event) {
+        return {
+            x: Math.round(event.clientX - canvas.offsetLeft),
+            y: Math.round(event.clientY - canvas.offsetTop)
+        }
+    }
 
     function randomRGBA() {
         let r = Math.round(Math.random() * 255);
