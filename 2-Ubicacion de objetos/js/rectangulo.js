@@ -7,7 +7,7 @@ class rectangulo extends figura {
         this.ladoY = ladoY;
     }
 
-    draw(lugar) {
+    draw() {
         this.context.beginPath();
         this.context.fillStyle = this.color;
         this.context.lineWidth = 2;
